@@ -1,0 +1,3 @@
+D:/Users/Public/C++/6th semestr/task3/cmake-build-debug/CMakeFiles/task3.dir
+D:/Users/Public/C++/6th semestr/task3/cmake-build-debug/CMakeFiles/edit_cache.dir
+D:/Users/Public/C++/6th semestr/task3/cmake-build-debug/CMakeFiles/rebuild_cache.dir
