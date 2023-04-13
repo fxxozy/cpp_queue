@@ -7,7 +7,6 @@
 using namespace std;
 
 
-/// Класс Queue (Очередь)
 template <typename T>
 class MyQueue
 {
@@ -33,11 +32,12 @@ public:
 
     void print();
 
-    void clear();
+    QueueIterator<T> begin();
+
+    QueueIterator<T> end();
 
     ~MyQueue();
 };
-
 
 
 template<typename T>
@@ -51,7 +51,7 @@ void MyQueue<T>::push(T value)
     }
     else
     {
-        tail->set_next(new_node);
+        tail->next = new_node;
         tail = new_node;
     }
     size++;
@@ -61,17 +61,18 @@ template<typename T>
 T MyQueue<T>::pop()
 {
     if (is_empty()) {
-        throw "There are no items in the queue!";
+        throw out_of_range("The are no items in queue!");
     }
     Node<T>* curr_node = head;
-    T value = curr_node->get_value();
+    T value = curr_node->value;
     if (head == tail)
     {
         head = tail = nullptr;
+        delete curr_node;
     }
     else
     {
-        head = head->get_next();
+        head = head->next;
         delete curr_node;
     }
     size--;
@@ -79,11 +80,12 @@ T MyQueue<T>::pop()
 }
 
 template<typename T>
-T MyQueue<T>::front() {
+T MyQueue<T>::front()
+{
     if (is_empty()) {
-        throw "There are no items in the queue!";
+        throw out_of_range("Queue is empty!");
     }
-    return head->get_value();
+    return head->value;
 }
 
 template<typename T>
@@ -91,9 +93,9 @@ T MyQueue<T>::back()
 {
     if (is_empty())
     {
-        throw "There are no items in the queue!";
+        throw out_of_range("Queue is empty!");
     }
-    return tail->get_value();
+    return tail->value;
 }
 
 template<typename T>
@@ -109,50 +111,49 @@ int MyQueue<T>::get_size()
 }
 
 template<typename T>
-void MyQueue<T>::clear()
+MyQueue<T>::~MyQueue()
 {
-    if (head != nullptr)
-    {
-        while (head != tail)
-        {
-            Node<T>* curr_node = head;
-            head = head->get_next();
-            delete curr_node;
-        }
-    }
-    delete head;
-    size = 0;
-}
-
-template<typename T>
-MyQueue<T>::~MyQueue() {
     if (head != nullptr)
     {
         while(head != tail)
         {
             Node<T>* curr_node = head;
-            head = head->get_next();
+            head = head->next;
             delete curr_node;
         }
         delete head;
     }
+    cout << "Deleting queue!" << endl;
 }
 
 template<typename T>
-void MyQueue<T>::print() {
-    cout << "Queue: ";
+void MyQueue<T>::print()
+{
+    cout <<  "Queue: ";
     if (is_empty())
     {
-        cout << "empty!\n";
+        cout <<  "empty!\n";
         return;
     }
     Node<T>* curr_node = head;
     while (curr_node != nullptr)
     {
-        cout << curr_node->get_value() << " ";
-        curr_node = curr_node->get_next();
+        cout << curr_node->value << " ";
+        curr_node = curr_node->next;
     }
     cout << endl;
+}
+
+template<typename T>
+QueueIterator<T> MyQueue<T>::begin()
+{
+    return QueueIterator<T>(head);
+}
+
+template<typename T>
+QueueIterator<T> MyQueue<T>::end()
+{
+    return QueueIterator<T>(tail);
 }
 
 

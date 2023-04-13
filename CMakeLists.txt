@@ -3,4 +3,4 @@ project(task3)
 
 set(CMAKE_CXX_STANDARD 20)
 
-add_executable(task3 main.cpp my_queue.h node.h)
+add_executable(task3 main.cpp my_queue.h node.h QueueIterator.h)
