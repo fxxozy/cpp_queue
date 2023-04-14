@@ -68,13 +68,12 @@ T MyQueue<T>::pop()
     if (head == tail)
     {
         head = tail = nullptr;
-        delete curr_node;
     }
     else
     {
         head = head->next;
-        delete curr_node;
     }
+    delete curr_node;
     size--;
     return value;
 }
